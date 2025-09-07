@@ -15,100 +15,77 @@ const topSimple = [
   { href: "/impact-investing", label: "Impacto" },
 ];
 
-// Produtos (rich: título + descrição + ícone)
+// Produtos (rich: título + descrição + ícone SVG do /public)
 const products = [
   {
     href: "/credits-and-technical-assistance",
     title: "Crédito + Assistência técnica",
     desc: "Financiamento com suporte técnico para práticas sustentáveis.",
-    icon: "credit",
+    icon: "/credito-assistencia-tecnica-purple.svg",
   },
   {
     href: "/payments-for-environmental-services",
     title: "Pagamentos por serviços ambientais",
     desc: "Receba por conservar ou restaurar a natureza.",
-    icon: "psa",
+    icon: "/payment-purple.svg",
   },
   {
     href: "/traceability-reward",
     title: "Prêmio por rastreabilidade",
     desc: "Incentivo para cadeias produtivas transparentes.",
-    icon: "trace",
+    icon: "/cow-tracking-purple.svg",
   },
   {
     href: "/environmental-credits",
     title: "Créditos ambientais",
     desc: "Monetize ações sustentáveis e reduza emissões.",
-    icon: "credits",
+    icon: "/money-leaf-purple.svg",
   },
 ] as const;
 
-// Soluções (lista simples)
+// Soluções (rich também, para ficar igual ao site)
 const solutions = [
-  { href: "/solutions-for-investors", title: "Investidores e Financiadores" },
-  { href: "/solutions-for-corporates", title: "Empresas" },
-  { href: "/technical-assistance-and-rural-extension", title: "Agentes de campo" },
-  { href: "/producers", title: "Produtores e cooperativas" },
+  {
+    href: "/solutions-for-investors",
+    title: "Investidores e Financiadores",
+    desc: "Acesse projetos de impacto com monitoramento contínuo.",
+    icon: "/investor-icon-purple.svg",
+  },
+  {
+    href: "/solutions-for-corporates",
+    title: "Empresas",
+    desc: "Transforme sua cadeia de fornecimento com soluções financeiras.",
+    icon: "/building.svg",
+  },
+  {
+    href: "/technical-assistance-and-rural-extension",
+    title: "Agentes de campo",
+    desc: "Amplie seu alcance com nossa plataforma integrada de monitoramento.",
+    icon: "/ater-icon-purple.svg",
+  },
+  {
+    href: "/producers",
+    title: "Produtores e cooperativas",
+    desc: "Acesse crédito verde e assistência técnica para implementar práticas sustentáveis.",
+    icon: "/farmer-icon-purple.svg",
+  },
 ] as const;
 
 /* =========================================
-   Ícones (simples, reutilizáveis)
+   Ícones (wrapper)
 ========================================= */
 
-const VIOLET = { stroke: "#5B2BBF", strokeWidth: 1.8, bg: "#F4F0FF" };
+const VIOLET = { bg: "#F4F0FF" };
 
 function IconWrap({ children }: PropsWithChildren) {
   return (
-    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full" style={{ backgroundColor: VIOLET.bg }}>
+    <span
+      className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full"
+      style={{ backgroundColor: VIOLET.bg }}
+    >
       {children}
     </span>
   );
-}
-
-function IconCredit() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke={VIOLET.stroke} strokeWidth={VIOLET.strokeWidth}>
-      <rect x="3" y="6" width="18" height="12" rx="2" />
-      <path d="M3 10h18M7 14h4" />
-    </svg>
-  );
-}
-function IconPSA() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke={VIOLET.stroke} strokeWidth={VIOLET.strokeWidth}>
-      <path d="M12 3v18" />
-      <path d="M6 9c3-5 9-5 12 0-3 5-9 5-12 0Z" />
-    </svg>
-  );
-}
-function IconTrace() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke={VIOLET.stroke} strokeWidth={VIOLET.strokeWidth}>
-      <path d="M4 19l6-6 4 4 6-6" />
-      <circle cx="20" cy="6" r="2" />
-    </svg>
-  );
-}
-function IconCredits() {
-  return (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none" stroke={VIOLET.stroke} strokeWidth={VIOLET.strokeWidth}>
-      <circle cx="12" cy="12" r="8" />
-      <path d="M8 12h8M12 8v8" />
-    </svg>
-  );
-}
-
-function resolveIcon(name: "credit" | "psa" | "trace" | "credits") {
-  switch (name) {
-    case "credit":
-      return <IconCredit />;
-    case "psa":
-      return <IconPSA />;
-    case "trace":
-      return <IconTrace />;
-    case "credits":
-      return <IconCredits />;
-  }
 }
 
 /* =========================================
@@ -141,11 +118,11 @@ function NavLink({ href, children }: PropsWithChildren<{ href: string }>) {
 
 /* =========================================
    Dropdown Genérico
-   - rich: itens com {title, desc, icon}
+   - rich: itens com {title, desc, icon: path}
    - simple: itens com {title}
 ========================================= */
 
-type RichItem = { href: string; title: string; desc: string; icon: "credit" | "psa" | "trace" | "credits" };
+type RichItem = { href: string; title: string; desc: string; icon: string };
 type SimpleItem = { href: string; title: string };
 
 function Dropdown({
@@ -188,7 +165,9 @@ function Dropdown({
             {(items as ReadonlyArray<RichItem>).map(({ href, title, desc, icon }) => (
               <li key={href}>
                 <Link href={href} className="flex gap-3.5 rounded-xl px-4 py-4 hover:bg-[#F7F7FB] transition">
-                  <IconWrap>{resolveIcon(icon)}</IconWrap>
+                  <IconWrap>
+                    <Image src={icon} alt="" width={24} height={24} />
+                  </IconWrap>
                   <span className="grid">
                     <span className="text-[14px] font-[520] text-[#1C1333] leading-none">{title}</span>
                     <span className="mt-1 text-[13px] leading-[1.35] text-gray-500">{desc}</span>
@@ -233,7 +212,7 @@ export default function Header() {
           <NavLink href="/">Home</NavLink>
 
           <Dropdown label="Produtos" items={products} rich width={340} center />
-          <Dropdown label="Soluções" items={solutions} width={360} center={false} />
+          <Dropdown label="Soluções" items={solutions} rich width={380} center={false} />
 
           {topSimple.map((l) => (
             <NavLink key={l.href} href={l.href}>
@@ -269,20 +248,35 @@ export default function Header() {
 
             <span className="mt-2 text-xs font-medium text-zinc-500">Produtos</span>
             {products.map((p) => (
-              <Link key={p.href} href={p.href} onClick={() => setOpenMobile(false)} className="rounded-md px-2 py-2 text-sm text-zinc-700 hover:bg-zinc-50">
+              <Link
+                key={p.href}
+                href={p.href}
+                onClick={() => setOpenMobile(false)}
+                className="rounded-md px-2 py-2 text-sm text-zinc-700 hover:bg-zinc-50"
+              >
                 {p.title}
               </Link>
             ))}
 
             <span className="mt-2 text-xs font-medium text-zinc-500">Soluções</span>
             {solutions.map((s) => (
-              <Link key={s.href} href={s.href} onClick={() => setOpenMobile(false)} className="rounded-md px-2 py-2 text-sm text-zinc-700 hover:bg-zinc-50">
+              <Link
+                key={s.href}
+                href={s.href}
+                onClick={() => setOpenMobile(false)}
+                className="rounded-md px-2 py-2 text-sm text-zinc-700 hover:bg-zinc-50"
+              >
                 {s.title}
               </Link>
             ))}
 
             {topSimple.map((l) => (
-              <Link key={l.href} href={l.href} onClick={() => setOpenMobile(false)} className="rounded-md px-2 py-2 text-sm text-zinc-700 hover:bg-zinc-50">
+              <Link
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpenMobile(false)}
+                className="rounded-md px-2 py-2 text-sm text-zinc-700 hover:bg-zinc-50"
+              >
                 {l.label}
               </Link>
             ))}
