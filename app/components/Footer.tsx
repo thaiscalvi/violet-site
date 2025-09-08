@@ -126,11 +126,11 @@ function FooterLinks({ items }: { items: LinkItem[] }) {
       {items.map((item) => (
         <li key={item.href}>
           <Link
-            href={item.href}
-            className="inline-block text-[15px] leading-relaxed text-white/90 hover:text-white transition"
-          >
-            {item.label}
-          </Link>
+  href={item.href}
+  className="inline-block text-[15px] leading-relaxed text-white/90 hover:text-violet-400 transition-colors duration-200"
+>
+  {item.label}
+</Link>
         </li>
       ))}
     </ul>
