@@ -29,7 +29,8 @@ export default function Footer() {
     <footer className="bg-[#37186E] text-white">
       {/* bloco principal */}
       <div className="mx-auto max-w-7xl px-4 py-12">
-        <div className="grid gap-12 md:grid-cols-4">
+        <div className="grid gap-16 md:grid-cols-[320px_1fr_1fr_1fr]">
+
           {/* Coluna 1: logo + selo + legal */}
           <div className="flex flex-col gap-6">
             {/* Logo secundária */}
@@ -45,9 +46,9 @@ export default function Footer() {
             <Image
               src="/footer/ambima-gestao.jpg"
               alt="Autorregulação ANBIMA – Gestão de Recursos"
-              width={145}
-              height={50}
-              className="rounded"
+              width={100}
+              height={20}
+              className="rounded-md"
             />
 
             {/* Legal */}
