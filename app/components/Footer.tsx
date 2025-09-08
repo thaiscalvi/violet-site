@@ -113,7 +113,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h3 className="text-[13px] font-semibold uppercase tracking-wide text-white/80">
+      <h3 className="text-[14px] font-semibold uppercase tracking-wide text-[#C7BEE8]">
         {title}
       </h3>
       <div className="mt-3">{children}</div>
@@ -128,7 +128,7 @@ function FooterLinks({ items }: { items: LinkItem[] }) {
         <li key={item.href}>
           <Link
   href={item.href}
-  className="inline-block text-[15px] leading-relaxed text-white/90 hover:text-violet-400 transition-colors duration-200"
+  className="inline-block text-[13px] leading-relaxed text-white/80 hover:text-violet-400 transition-colors duration-200"
 >
   {item.label}
 </Link>
